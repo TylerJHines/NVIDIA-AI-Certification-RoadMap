@@ -36,3 +36,5 @@ body:has(.mock-lab-heading){height:100dvh;overflow:hidden;display:flex;flex-dire
 
 /* v11: keep long brand legible on narrow screens */
 .brand strong{display:block;max-width:min(540px,54vw);font-size:clamp(13px,1.5vw,20px);line-height:1.2;white-space:normal}.cloud-auth{flex-wrap:wrap;justify-content:flex-end}.cloud-auth #cloud-status{max-width:380px;overflow-wrap:anywhere}@media(max-width:650px){header{gap:10px;flex-wrap:wrap}.brand strong{max-width:calc(100vw - 80px)}.cloud-auth{width:100%;justify-content:space-between}.cloud-auth #cloud-status{font-size:12px;max-width:60%}}
+
+.commands{display:grid;grid-template-columns:260px minmax(0,1fr);gap:15px}.command-list{max-height:590px;overflow:auto}.command-list button{display:block;width:100%;text-align:left;padding:11px;background:transparent;color:#b9d0e5;border:0;border-bottom:1px solid #2c4059;white-space:normal}.command-list button.selected{color:#7be4bd;background:#20364c}.note{background:#22354a;border-left:3px solid #5bd3b4;padding:12px;border-radius:6px}@media(max-width:750px){.commands{grid-template-columns:1fr}.command-list{max-height:210px}}
