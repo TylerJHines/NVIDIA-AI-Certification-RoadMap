@@ -2,3 +2,11 @@
 .sim-launch{display:flex;flex-wrap:wrap;gap:12px}.sim-launch a{padding:10px;border:1px solid #8bc34a;border-radius:8px;color:#c9f29c}
 
 .academy-header-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.academy-auth{display:flex;flex-direction:column;gap:5px;align-items:flex-end;max-width:360px}.academy-auth #cloud-status{font-size:12px;color:#b4c9dc}.academy-auth small{color:#80e0b6}.academy-auth button{padding:6px 11px}.resource-item{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.course-check{display:flex;align-items:center;gap:5px;color:#a6e8c7;font-size:12px;white-space:nowrap}.course-check input{width:17px;height:17px;min-width:17px;flex:none;accent-color:#4acb9a}@media(max-width:650px){.academy-auth{align-items:flex-start}.academy-header-actions{width:100%}}
+
+/* V5: keep account controls at the far right, no redundant simulator shortcuts */
+header > div:first-child{flex:1 1 auto;min-width:0}
+.academy-header-actions{margin-left:auto;flex:0 0 auto;justify-content:flex-end;flex-wrap:nowrap}
+.academy-auth{align-items:flex-end;text-align:right;max-width:420px}
+.academy-auth #cloud-status{max-width:420px;overflow-wrap:anywhere}
+[hidden],button[hidden]{display:none!important}
+@media(max-width:650px){header{flex-direction:row;align-items:flex-start;flex-wrap:wrap}header > div:first-child{flex:1 1 100%}.academy-header-actions{margin-left:auto;width:auto;justify-content:flex-end}.academy-auth{align-items:flex-end;text-align:right}}
