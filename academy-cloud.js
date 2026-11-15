@@ -8,11 +8,7 @@ if(!ready){say('Google sign-in not configured. See SETUP-GOOGLE-LOGIN.md. Progre
 else try{
  const [{initializeApp},{getAuth,GoogleAuthProvider,signInWithPopup,signOut,onAuthStateChanged,setPersistence,browserLocalPersistence},{getFirestore,doc,getDoc,setDoc}]=await Promise.all([
  import('https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js'),import('https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js'),import('https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js')]);
-const app=initializeApp(firebaseConfig);
-auth=getAuth(app);
-db=getFirestore(app);
-await setPersistence(auth,browserLocalPersistence);
-login.disabled=false;
+ const app=initializeApp(firebaseConfig);auth=getAuth(app);db=getFirestore(app);await setPersistence(auth,browserLocalPersistence);login.disabled=false;
  login.onclick=async()=>{try{await signInWithPopup(auth,new GoogleAuthProvider())}catch(e){say('Sign-in failed: '+(e.code||e.message))}};
  logout.onclick=()=>signOut(auth).catch(e=>say('Sign-out failed: '+e.message));
  onAuthStateChanged(auth,async u=>{user=u;loading=true;login.hidden=!!u;logout.hidden=!u;if(!u){say('Guest mode · Local progress only');loading=false;return}say('Loading your saved progress…');try{

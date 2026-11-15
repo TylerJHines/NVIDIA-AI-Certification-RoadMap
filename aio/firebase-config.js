@@ -1,6 +1,4 @@
-// Firebase Console > Project settings > Your apps > Web app > SDK setup and configuration.
-// Copy ONLY the public web app config values here. Never paste service-account keys.
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Public Firebase web app configuration. Do not put service-account keys here.
 export const firebaseConfig = {
   apiKey: "AIzaSyB1aJBgOGB7lUYZeJ5f9PTzGsrGHDi01lA",
   authDomain: "ncp-aio-lab-mock-exam.firebaseapp.com",

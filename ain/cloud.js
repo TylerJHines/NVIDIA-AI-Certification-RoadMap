@@ -4,11 +4,12 @@ const say=s=>{if(status)status.textContent=s};
 if(!(firebaseConfig.apiKey&&firebaseConfig.authDomain&&firebaseConfig.projectId&&firebaseConfig.appId)){
  say('Local progress only · Sign in from academy after Firebase setup');
 }else try{
- const [{initializeApp},{getAuth,onAuthStateChanged},{getFirestore,doc,getDoc,setDoc}]=await Promise.all([
+ const [{initializeApp},{getAuth,onAuthStateChanged,setPersistence,browserLocalPersistence},{getFirestore,doc,getDoc,setDoc}]=await Promise.all([
  import('https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js'),
  import('https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js'),
  import('https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js')]);
- const app=initializeApp(firebaseConfig,'ain-simulator'),auth=getAuth(app),db=getFirestore(app);
+ const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+ await setPersistence(auth,browserLocalPersistence);
  let user=null,loading=true,queued=false,needsInitialSave=false;
  const ref=uid=>doc(db,'users',uid,'ain','progress');
  async function save(){if(!user||loading)return;try{
@@ -26,7 +27,7 @@ if(!(firebaseConfig.apiKey&&firebaseConfig.authDomain&&firebaseConfig.projectId&
    localStorage.setItem('ain-done-v3',JSON.stringify([...completed]));
    if(mock)localStorage.setItem('ain-mock-v3',JSON.stringify(mock));else localStorage.removeItem('ain-mock-v3');
    localStorage.setItem('ain-progress-owner-v7',u.uid);
-   render();say('Signed in · AIN progress loaded');
+   render();say('Signed in as '+(u.displayName||u.email)+' · AIN progress loaded');
   }catch(e){say('AIN cloud load failed: '+e.message)}finally{loading=false;if(queued||needsInitialSave){queued=false;needsInitialSave=false;await save()} }
  });
 }catch(e){say('AIN Firebase initialization failed: '+e.message)}
