@@ -7,6 +7,10 @@ service cloud.firestore {
     match /users/{userId}/academy/{docId} {
       allow read, write: if request.auth != null && request.auth.uid == userId && docId == 'progress';
     }
+    match /users/{userId}/certifications/{certCode} {
+      allow read, write: if request.auth != null && request.auth.uid == userId
+        && certCode in ['NCA-AIIO','NCP-AII','NCA-APC','NCP-ARI','NCP-AIN','NCP-AIO'];
+    }
     match /users/{userId}/ain/{docId} {
       allow read, write: if request.auth != null && request.auth.uid == userId && docId == 'progress';
     }
