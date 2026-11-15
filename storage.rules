@@ -1,0 +1,13 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /users/{userId}/certifications/{certCode}/evidence {
+      function owner() { return request.auth != null && request.auth.uid == userId; }
+      function supportedCode() { return certCode in ['NCA-AIIO','NCP-AII','NCA-APC','NCP-ARI','NCP-AIN','NCP-AIO']; }
+      allow read, delete: if owner() && supportedCode();
+      allow create, update: if owner() && supportedCode()
+        && request.resource.size > 0 && request.resource.size <= 5 * 1024 * 1024
+        && request.resource.contentType in ['application/pdf','image/png','image/jpeg'];
+    }
+  }
+}
