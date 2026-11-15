@@ -1,16 +1,11 @@
-# Google sign-in setup for Tyler's NCP-AIO Practice Sim and Mock Exam
+# Academy Google sign-in setup (V7)
 
-**IMPORTANT:** This download deliberately has blank Firebase settings. If your current deployed `firebase-config.js` has your real public Firebase web config, **keep that file** instead of overwriting it with the blank template.
+1. Firebase Console > Project settings > General > Your apps > Web app > SDK setup and configuration. Copy the PUBLIC web config values into `aio/firebase-config.js` (apiKey, authDomain, projectId, appId, messagingSenderId). Do not use a service account key.
+2. Authentication > Sign-in method > Google > Enable; select a support email; Save.
+3. Authentication > Settings > Authorized domains > Add your exact GitHub Pages hostname (for example `tylerjhines.github.io`), without `https://` or `/repository`.
+4. Firestore Database > Create database (if not already created). Then Rules > paste contents of root `firestore.rules` > Publish. This includes per-user access for the academy, AIN, and AIO.
+5. Upload the changed files to the GitHub Pages repository `main` branch, preserving the folder structure. In particular, root `academy.js`, `firestore.rules` (for your reference), `aio/firebase-config.js`, `ain/index.html`, `ain/app.js`, and `ain/cloud.js`.
+6. Wait for GitHub Pages deployment, hard refresh the homepage, sign in with Google. Open NCP-AIN and NCP-AIO from the certification pages. Both open in NEW tabs and use the same Firebase project and authentication session (subject to browser privacy settings).
+7. Test in normal browser tabs: sign in on home; check a course; complete an AIN lab; complete an AIO lab; refresh and verify; sign out on home; sign back in; verify restored progress. Firestore Console should show `users/{uid}/academy/progress`, `users/{uid}/ain/progress`, and AIO records under `users/{uid}/profile/progress`, `users/{uid}/labs`, and `users/{uid}/exams`.
 
-1. Firebase Console → Project settings → General → Your apps → Web app → SDK setup and configuration. Copy the public config values to `firebase-config.js`. The web `apiKey` is not an admin secret; NEVER use a service-account key in the site.
-2. Authentication → Sign-in method → Google → Enable and Save.
-3. Authentication → Settings → Authorized domains → add the hostname of your GitHub Pages site, e.g. `YOUR_USERNAME.github.io`, without protocol or repository path. If using a custom domain, add it too.
-4. Firestore Database → Rules → publish the supplied `firestore.rules`.
-5. Upload the complete updated site to GitHub Pages root, including `cloud.js`, `firebase-config.js`, `app.js`, `index.html`, `style.css`, `sw.js`. Wait for deployment.
-6. Open in a new private browsing window. The top bar should say `Guest mode · Google sign-in ready`. If it instead says configuration missing, inspect the deployed `firebase-config.js`. If initialization failed, inspect browser Console/Network and the visible message.
-7. Click Sign in with Google. If the popup is blocked, allow popups and test in a regular browser (not iOS Home Screen standalone). If it says unauthorized-domain, fix step 3.
-8. Complete a fault lab and a mock exam, then inspect Firestore under `users/{uid}/labs` and `users/{uid}/exams`.
-
-**Security:** Keep Firestore access restricted to each authenticated user's UID. Google sign-in requires network access to Firebase and an authorized website domain. Scores are generated client-side and not tamper-proof.
-
-**Note:** Google popup sign-in is not guaranteed in iPhone standalone PWA mode. Use Safari first. Supporting reliable standalone redirect authentication on a GitHub Pages custom domain can require a Firebase-compatible auth helper or hosting change.
+Note: AIN cloud save currently stores guided-lab completions and the current mock state; AIO uses its existing history model. Opening a new tab is not itself a new Google login. Some browsers and standalone PWAs may restrict auth persistence. Existing guest AIN progress is imported on first sign-in if no remote record exists. Cloud records are authoritative on later sign-ins.

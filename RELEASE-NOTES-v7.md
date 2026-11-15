@@ -1,0 +1,1 @@
+V7: Simulator launch links open in new tabs; AIN now observes the shared Firebase login and syncs lab completion/mock state; Firestore rules updated for AIN. AIO cloud behavior unchanged. Requires Firebase setup and browser testing.

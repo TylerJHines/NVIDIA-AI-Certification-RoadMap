@@ -2,7 +2,7 @@ const $=s=>document.querySelector(s),app=$('#app');const esc=s=>String(s??'').re
 const shuffle=a=>[...a].sort(()=>Math.random()-.5);let page='dashboard',active=null,mock=null,history=[],hints=0,completed=new Set(JSON.parse(localStorage.getItem('ain-done-v3')||'[]'));
 let selectedCommand=0;
 const catalog=[...new Map(AIN_LABS.flatMap(l=>l.steps.map(s=>[s[1],[s[1],s[0],l.domain]]))).values()];
-function save(){localStorage.setItem('ain-done-v3',JSON.stringify([...completed]));if(mock)localStorage.setItem('ain-mock-v3',JSON.stringify(mock))}
+function save(){localStorage.setItem('ain-done-v3',JSON.stringify([...completed]));if(mock)localStorage.setItem('ain-mock-v3',JSON.stringify(mock));window.dispatchEvent(new Event('ain-progress-changed'))}
 function button(t,fn,cls=''){return `<button class="button ${cls}" onclick="${esc(fn)}">${t}</button>`}
 function go(p){page=p;render()}function resetState(){return {link:{swp1:'down',swp2:'up',swp49:'up'},mtu:{swp1:9216,swp2:1500,swp49:9216},staged:{},last:'',escalated:false}}
 let net=resetState();function start(id,fromMock=false){let l=AIN_LABS.find(x=>x.id===id);if(!l)return;active={id,at:0,done:[],hintCounts:[],fromMock};net=resetState();if(id!=='cx-link')net.link.swp1='up';if(id!=='cx-mtu')net.mtu.swp2=9216;history=[];hints=0;page='terminal';render()}
